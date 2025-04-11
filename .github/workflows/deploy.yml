@@ -1,0 +1,58 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          # Add environment variables here if needed
+          NEXT_PUBLIC_BASE_PATH: /website
+          # Enable custom domain
+          USE_CUSTOM_DOMAIN: 'true'
+          # Disable ESLint
+          NEXT_DISABLE_ESLINT: 1
+        continue-on-error: true
+
+      - name: Generate 404.html
+        run: node scripts/generate-404.js
+
+      - name: Create .nojekyll file
+        run: touch out/.nojekyll
+
+      - name: Ensure CNAME is in the output directory
+        run: cp public/CNAME out/
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: out 
