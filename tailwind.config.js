@@ -9,53 +9,53 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: "2rem",
       screens: {
-        '2xl': '1400px',
+        "2xl": "1400px",
       },
     },
     extend: {
       colors: {
-        border: 'var(--border)',
-        input: 'var(--input)',
-        ring: 'var(--ring)',
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        border: "oklch(var(--border) / <alpha-value>)",
+        input: "oklch(var(--input) / <alpha-value>)",
+        ring: "oklch(var(--ring) / <alpha-value>)",
+        background: "oklch(var(--background) / <alpha-value>)",
+        foreground: "oklch(var(--foreground) / <alpha-value>)",
         primary: {
-          DEFAULT: 'var(--primary)',
-          foreground: 'var(--primary-foreground)',
+          DEFAULT: "oklch(var(--primary) / <alpha-value>)",
+          foreground: "oklch(var(--primary-foreground) / <alpha-value>)",
         },
         secondary: {
-          DEFAULT: 'var(--secondary)',
-          foreground: 'var(--secondary-foreground)',
-        },
-        muted: {
-          DEFAULT: 'var(--muted)',
-          foreground: 'var(--muted-foreground)',
-        },
-        accent: {
-          DEFAULT: 'var(--accent)',
-          foreground: 'var(--accent-foreground)',
+          DEFAULT: "oklch(var(--secondary) / <alpha-value>)",
+          foreground: "oklch(var(--secondary-foreground) / <alpha-value>)",
         },
         destructive: {
-          DEFAULT: 'var(--destructive)',
-          foreground: 'var(--destructive-foreground)',
+          DEFAULT: "oklch(var(--destructive) / <alpha-value>)",
+          foreground: "oklch(var(--destructive-foreground) / <alpha-value>)",
         },
-        card: {
-          DEFAULT: 'var(--card)',
-          foreground: 'var(--card-foreground)',
+        muted: {
+          DEFAULT: "oklch(var(--muted) / <alpha-value>)",
+          foreground: "oklch(var(--muted-foreground) / <alpha-value>)",
+        },
+        accent: {
+          DEFAULT: "oklch(var(--accent) / <alpha-value>)",
+          foreground: "oklch(var(--accent-foreground) / <alpha-value>)",
         },
         popover: {
-          DEFAULT: 'var(--popover)',
-          foreground: 'var(--popover-foreground)',
+          DEFAULT: "oklch(var(--popover) / <alpha-value>)",
+          foreground: "oklch(var(--popover-foreground) / <alpha-value>)",
+        },
+        card: {
+          DEFAULT: "oklch(var(--card) / <alpha-value>)",
+          foreground: "oklch(var(--card-foreground) / <alpha-value>)",
         },
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 } 

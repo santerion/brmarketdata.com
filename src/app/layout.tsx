@@ -12,36 +12,36 @@ const quicksandFont = Quicksand({
 });
 
 // Get the absolute URL for the image
-const logoUrl = `https://santerion.com${getPublicPath('/logo_violet_light.avif')}`;
+const logoUrl = `https://brmarketdata.com${getPublicPath('/icon.png')}`;
 
 export const metadata: Metadata = {
-  title: "Santerion | Software Development",
-  description: "Software on budget & on time",
+  title: "BR Market Data | Brazilian Stock Market Data",
+  description: "Historical data for Brazilian stocks",
   icons: {
-    icon: getPublicPath('/icon_violet.avif'),
-    apple: getPublicPath('/icon_violet.avif'),
+    icon: getPublicPath('/icon.png'),
+    apple: getPublicPath('/icon.png'),
   },
-  metadataBase: new URL('https://santerion.com'),
+  metadataBase: new URL('https://brmarketdata.com'),
   openGraph: {
-    title: "Santerion | Software Development",
-    description: "Software on budget & on time",
+    title: "BR Market Data | Brazilian Stock Market Data",
+    description: "Historical data for Brazilian stocks",
     images: [
       {
         url: logoUrl,
         width: 1200,
         height: 630,
-        alt: "Santerion Logo",
+        alt: "BR Market Data Logo",
       }
     ],
     type: 'website',
-    siteName: 'Santerion',
+    siteName: 'BR Market Data',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Santerion | Software Development",
-    description: "Software on budget & on time",
+    title: "BR Market Data | Brazilian Stock Market Data",
+    description: "Preços e indicadores históricos de ações brasileiras",
     images: [logoUrl],
-    creator: '@santerion',
+    creator: '@brmarketdata',
   },
 };
 
@@ -57,7 +57,7 @@ export default function RootLayout({
         <meta property="og:image" content={logoUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Santerion Logo" />
+        <meta property="og:image:alt" content="BR Market Data Logo" />
         <meta name="twitter:image" content={logoUrl} />
       </head>
       <body
@@ -65,7 +65,7 @@ export default function RootLayout({
         className='font-sans antialiased'
         suppressHydrationWarning={true}
       >
-        <ThemeProvider defaultTheme="light" storageKey="santerion-theme">
+        <ThemeProvider defaultTheme="light" storageKey="brmarketdata-theme">
           {children}
         </ThemeProvider>
         {/* 100% privacy-first analytics */}

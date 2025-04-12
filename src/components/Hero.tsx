@@ -9,7 +9,7 @@ export function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image 
-          src={getPublicPath("/bg_violet.avif")}
+          src={getPublicPath("/bg_violet.png")}
           alt="Blue skies background"
           fill
           priority

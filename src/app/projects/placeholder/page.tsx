@@ -52,7 +52,7 @@ export default function PlaceholderProjectPage() {
       
       <footer className="py-6 px-6 border-t mt-16">
         <div className="max-w-7xl mx-auto text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Santerion. All rights reserved.
+          © {new Date().getFullYear()} BR Market Data. All rights reserved.
         </div>
       </footer>
     </div>

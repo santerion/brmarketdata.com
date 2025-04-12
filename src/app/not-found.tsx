@@ -31,18 +31,18 @@ export default function NotFound() {
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-16">
         <div className="text-center max-w-2xl mx-auto">
           <Image 
-            src={getPublicPath('/icon_violet.avif')}
-            alt="Santerion Logo"
+            src={getPublicPath('/icon.png')}
+            alt="BR Market Data Logo"
             width={80}
             height={80}
-            className="mx-auto mb-6"
+            className="mb-8 mx-auto"
           />
           
-          <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-violet-700 to-violet-950 bg-clip-text text-transparent">
+          <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r bg-clip-text text-transparent">
             404
           </h1>
           
-          <h2 className="text-3xl font-bold mb-4 text-violet-950">
+          <h2 className="text-3xl font-bold mb-4">
             Page Not Found
           </h2>
           
@@ -55,7 +55,7 @@ export default function NotFound() {
             <Button 
               onClick={() => router.push('/')}
               size="lg"
-              className="bg-violet-800 hover:bg-violet-900"
+              className="bg-primary hover:bg-primary/90"
             >
               Go to Homepage
             </Button>
@@ -64,7 +64,7 @@ export default function NotFound() {
               onClick={() => router.push('/contact')}
               variant="outline"
               size="lg"
-              className="border-violet-800 text-violet-800 hover:bg-violet-50"
+              className="border-primary text-primary hover:bg-primary/10"
             >
               Contact Support
             </Button>

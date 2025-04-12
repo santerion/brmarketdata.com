@@ -20,45 +20,29 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link href="/" className="text-2xl font-semibold flex items-center gap-1">
           <Image 
-            src={getPublicPath('/icon_violet.avif')}
-            alt="Santerion Logo"
-            width={24}
-            height={24}
+            src={getPublicPath('/icon_center.png')}
+            alt="BR Market Data Logo"
+            width={32}
+            height={32}
           />
-          <span className="text-lg font-bold text-violet-950 dark:text-violet-200">Santerion</span>
+          <span className="text-lg font-bold ml-1">BR Market Data</span>
         </Link>
         
         <div className="flex items-center gap-4">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link href="/projects" legacyBehavior passHref>
+                <Link href="/pricing" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <span className="text-md font-semibold text-violet-950 dark:text-violet-200">Portfolio</span>
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              
-              {/* <NavigationMenuItem>
-                <Link href="/about" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <span className="text-md font-semibold text-violet-950 dark:text-violet-200">About</span>
+                    <span className="text-md font-semibold">Pricing</span>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               
               <NavigationMenuItem>
-                <Link href="/partners" legacyBehavior passHref>
+                <Link href="/docs" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <span className="text-md font-semibold text-violet-950 dark:text-violet-200">Partners</span>
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem> */}
-              
-              <NavigationMenuItem>
-                <Link href="/contact" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <span className="text-md font-semibold text-violet-950 dark:text-violet-200">Contact us</span>
+                    <span className="text-md font-semibold">Docs</span>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>

@@ -70,7 +70,7 @@ export default function FintzBotProjectPage() {
       
       <footer className="mt-16 border-t px-6 py-6">
         <div className="mx-auto max-w-7xl text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Santerion. All rights reserved.
+          © {new Date().getFullYear()} BR Market Data. All rights reserved.
         </div>
       </footer>
     </div>

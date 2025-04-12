@@ -11,7 +11,7 @@ export default function ContactPage() {
       <Navbar />
       <main className="flex-1 py-12 px-6">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-violet-700 to-violet-950 bg-clip-text text-transparent">Let's do it!</h1>
+          <h1 className="text-5xl font-bold mb-4">Let's do it!</h1>
           <p className="text-xl text-muted-foreground mb-12">
             Let's have a call and discuss your custom solution
           </p>
@@ -57,7 +57,7 @@ export default function ContactPage() {
                 />
               </div>
               
-              <Button type="submit" size="lg" className="w-full bg-violet-950 text-white hover:bg-violet-900 cursor-pointer">
+              <Button type="submit" size="lg" className="w-full bg-primary cursor-pointer">
                 Submit
               </Button>
             </form>
