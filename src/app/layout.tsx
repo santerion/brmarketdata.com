@@ -15,21 +15,21 @@ const quicksandFont = Quicksand({
 const logoUrl = `https://brmarketdata.com${getPublicPath('/icon.png')}`;
 
 export const metadata: Metadata = {
-  title: "BR Market Data | Brazilian Stock Market Data",
-  description: "Historical data for Brazilian stocks",
+  title: "BR Market Data | Preços e indicadores históricos de ações brasileiras",
+  description: "Preços e indicadores históricos de ações brasileiras",
   icons: {
     icon: getPublicPath('/icon.png'),
     apple: getPublicPath('/icon.png'),
   },
   metadataBase: new URL('https://brmarketdata.com'),
   openGraph: {
-    title: "BR Market Data | Brazilian Stock Market Data",
-    description: "Historical data for Brazilian stocks",
+    title: "Brazil Market Data API | 🇧🇷",
+    description: "Preços e indicadores históricos de ações brasileiras",
     images: [
       {
         url: logoUrl,
-        width: 1200,
-        height: 630,
+        width: 600,
+        height: 600,
         alt: "BR Market Data Logo",
       }
     ],
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "BR Market Data | Brazilian Stock Market Data",
+    title: "Brazil Market Data API | 🇧🇷",
     description: "Preços e indicadores históricos de ações brasileiras",
     images: [logoUrl],
     creator: '@brmarketdata',
@@ -55,8 +55,8 @@ export default function RootLayout({
       <head>
         {/* Explicit Open Graph meta tags */}
         <meta property="og:image" content={logoUrl} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="600" />
         <meta property="og:image:alt" content="BR Market Data Logo" />
         <meta name="twitter:image" content={logoUrl} />
       </head>
