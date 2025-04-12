@@ -3,12 +3,12 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 export function Footer() {
     return (
-        <footer className="py-8 px-6 border-t bg-primary">
+        <footer className="py-8 px-6 border-t bg-muted">
         <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-            <div className="text-lg font-bold mb-4 ">Santerion</div>
-            <div className="">@BR Market Data.com</div>
+            <div className="text-lg font-bold mb-4 ">BR Market Data</div>
+            <div className="">@brmarketdata.com</div>
             </div>
             <div>
             <div className="font-bold mb-4  text-lg">Links</div>

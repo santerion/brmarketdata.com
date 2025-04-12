@@ -8,11 +8,20 @@ import { Button } from "@/components/ui/button"
 import { format } from "date-fns"
 import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Link from "next/link"
 
 interface ChartDataPoint {
   date: string
   price: number
+}
+
+interface Indicator {
+  ticker: string
+  date: string
+  key: string
+  name: string
+  value: number | null
 }
 
 const STOCKS = [
@@ -24,8 +33,10 @@ const STOCKS = [
 const TIME_RANGES = [
   { value: "1m", label: "1M" },
   { value: "3m", label: "3M" },
+  { value: "YTD", label: "YTD" },
   { value: "1y", label: "1Y" },
   { value: "5y", label: "5Y" },
+  { value: "10y", label: "10Y" },
 ]
 
 const chartConfig = {
@@ -35,12 +46,43 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
+// List of indicators to display
+const INDICATORS_TO_SHOW = [
+  "current_liquidity",
+  "dividend_yield_last_12_months",
+  "ebitda_margin",
+  "ebit_margin",
+  "ev_ebit",
+  "ev_ebitda",
+  "gross_margin",
+  "growth_net_profit_last_5_years",
+  "growth_net_revenue_last_5_years",
+  "lpa",
+  "net_margin",
+  "p_asset_current_net",
+  "p_assets",
+  "payout",
+  "p_ebit",
+  "p_ebitda",
+  "p_l",
+  "psr",
+  "p_vp",
+  "p_working_capital",
+  "roa",
+  "roe",
+  "roic",
+  "vpa"
+];
+
 export default function Home() {
   const [selectedStock, setSelectedStock] = useState(STOCKS[0].value)
   const [selectedTimeRange, setSelectedTimeRange] = useState(TIME_RANGES[0].value)
   const [chartData, setChartData] = useState<ChartDataPoint[]>([])
+  const [indicators, setIndicators] = useState<Indicator[]>([])
   const [loading, setLoading] = useState(false)
+  const [indicatorsLoading, setIndicatorsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [indicatorsError, setIndicatorsError] = useState<string | null>(null)
 
   // Calculate Y-axis domain
   const getYAxisDomain = () => {
@@ -70,6 +112,46 @@ export default function Home() {
     }
   } satisfies ChartConfig
 
+  // Fetch indicators data when stock changes
+  useEffect(() => {
+    const fetchIndicators = async () => {
+      setIndicatorsLoading(true)
+      setIndicatorsError(null)
+      
+      try {
+        const response = await fetch(
+          `https://api.brmarketdata.com/indicators/by-ticker?ticker=${selectedStock}`,
+          {
+            mode: 'cors',
+            headers: {
+              'Accept': 'application/json',
+            },
+          }
+        )
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const data = await response.json()
+        
+        // Filter data to only show the indicators we want
+        const filteredData = data.filter((item: Indicator) => 
+          INDICATORS_TO_SHOW.includes(item.key)
+        )
+        
+        setIndicators(filteredData)
+      } catch (error) {
+        console.error("Error fetching indicators:", error)
+        setIndicatorsError(error instanceof Error ? error.message : "Failed to fetch indicators")
+      } finally {
+        setIndicatorsLoading(false)
+      }
+    }
+
+    fetchIndicators()
+  }, [selectedStock])
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
@@ -91,6 +173,14 @@ export default function Home() {
             break
           case "5y":
             startDate.setFullYear(startDate.getFullYear() - 5)
+            break
+          case "10y":
+            startDate.setFullYear(startDate.getFullYear() - 10)
+            break
+          case "YTD":
+            startDate.setFullYear(startDate.getFullYear())
+            startDate.setMonth(0)
+            startDate.setDate(1)
             break
         }
 
@@ -135,12 +225,12 @@ export default function Home() {
         {/* Hero Section */}
         <section className="py-32 px-6 bg-gradient-to-br from-primary/15 to-primary/10">
           <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-6xl font-bold mb-6">Brazilian Market Data API</h1>
+            <h1 className="text-6xl font-bold mb-6">🇧🇷 API de ações</h1>
             <p className="text-2xl text-muted-foreground mb-8">
-              Access real-time and historical data for Brazilian stocks with our powerful API
+              Acesse preços e indicadores históricos de ações brasileiras com nossa API
             </p>
             <Button size="lg" asChild>
-              <Link href="#pricing">Get Started</Link>
+              <Link href="#pricing">Começar</Link>
             </Button>
           </div>
         </section>
@@ -148,24 +238,24 @@ export default function Home() {
         {/* Features Section */}
         <section className="py-20 px-6 bg-background">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-12">Why Choose Our API?</h2>
+            <h2 className="text-4xl font-bold text-center mb-12">Por que escolher nossa API?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center p-6">
-                <h3 className="text-2xl font-bold mb-4">Real-time Data</h3>
+                <h3 className="text-2xl font-bold mb-4">Facilidade de uso</h3>
                 <p className="text-muted-foreground">
-                  Get up-to-the-minute stock prices and market data for Brazilian companies
+                  Endpoints simples e intuitivos para acessar dados de ações brasileiras
                 </p>
               </div>
               <div className="text-center p-6">
-                <h3 className="text-2xl font-bold mb-4">Historical Data</h3>
+                <h3 className="text-2xl font-bold mb-4">Dados históricos</h3>
                 <p className="text-muted-foreground">
-                  Access years of historical data for backtesting and analysis
+                  10 anos de dados históricos.
                 </p>
               </div>
               <div className="text-center p-6">
-                <h3 className="text-2xl font-bold mb-4">Simple Integration</h3>
+                <h3 className="text-2xl font-bold mb-4">Integração simples</h3>
                 <p className="text-muted-foreground">
-                  RESTful API with clear documentation and examples
+                  API REST com documentação clara e exemplos.
                 </p>
               </div>
             </div>
@@ -175,9 +265,9 @@ export default function Home() {
         {/* Live Demo Section */}
         <section className="py-20 px-0 bg-muted">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-4">Live Demo</h2>
+            <h2 className="text-4xl font-bold text-center mb-4">Veja funcionando</h2>
             <p className="text-center text-muted-foreground mb-8">
-              Try our API in action with this interactive chart
+              Experimente o gráfico interativo e o painel de fundamentos abaixo - alimentados pela API.
             </p>
             
             <div className="bg-card py-6 px-0 rounded-lg shadow-lg">
@@ -304,48 +394,96 @@ export default function Home() {
                 )}
               </div>
             </div>
+            
+            {/* Fundamentals Table */}
+            <div className="mt-8 bg-card py-6 px-4 rounded-lg shadow-lg">
+              <h3 className="text-xl font-bold mb-4">Stock Fundamentals <span className="text-primary">{selectedStock}</span></h3>
+              
+              {indicatorsError && (
+                <div className="mb-8 p-4 bg-destructive/10 text-destructive rounded-lg text-center">
+                  {indicatorsError}
+                </div>
+              )}
+              
+              {indicatorsLoading ? (
+                <div className="flex items-center justify-center h-32">
+                  <div className="flex flex-col items-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-2"></div>
+                    <p className="text-sm text-muted-foreground">Loading fundamentals data...</p>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  
+                  {indicators.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                      {indicators.map((indicator) => {
+                        
+                        return (
+                          <div key={indicator.key} className="bg-card border border-border p-2 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                            <div className="font-medium text-xs mb-1 truncate" title={indicator.name}>{indicator.name}</div>
+                            <div className={`text-right font-bold text-md`}>
+                              {indicator.value !== null 
+                                ? indicator.key.includes('margin') || indicator.key.includes('dividend') || indicator.key.includes('growth') || indicator.key.includes('payout') || indicator.key.includes('roic') || indicator.key.includes('roa') || indicator.key.includes('roe')
+                                  ? `${indicator.value.toFixed(2)}%`
+                                  : indicator.value.toFixed(2)
+                                : '-'}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="text-center py-4 text-muted-foreground">
+                      No data available
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="py-20 px-6">
+        <section id="pricing" className="py-20 px-6 bg-muted">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-12">Simple Pricing</h2>
+            <h2 className="text-4xl font-bold text-center mb-12">Precificação simples</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-card p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-bold mb-4">Starter</h3>
-                <p className="text-4xl font-bold mb-4">$49<span className="text-muted-foreground text-lg">/month</span></p>
+                <h3 className="text-2xl font-bold mb-4">Básico</h3>
+                <p className="text-4xl font-bold mb-4">R$49<span className="text-muted-foreground text-lg">/mês</span></p>
                 <ul className="space-y-4 mb-8">
-                  <li>100,000 API calls/month</li>
-                  <li>Real-time data</li>
-                  <li>1 year historical data</li>
-                  <li>Email support</li>
+                  <li>10.000 chamadas por mês</li>
+                  <li>Dados End of Day</li>
+                  <li>25 indicadores</li>
+                  <li>10 anos de dados históricos</li>
                 </ul>
                 <Button className="w-full" asChild>
-                  <Link href="/contact">Get Started</Link>
+                  <Link href="/contact">Começar</Link>
                 </Button>
               </div>
               <div className="bg-card p-8 rounded-lg shadow-lg border-2 border-primary">
-                <h3 className="text-2xl font-bold mb-4">Professional</h3>
-                <p className="text-4xl font-bold mb-4">$99<span className="text-muted-foreground text-lg">/month</span></p>
+                <h3 className="text-2xl font-bold mb-4">Avançado</h3>
+                <p className="text-4xl font-bold mb-4">R$99<span className="text-muted-foreground text-lg">/mês</span></p>
                 <ul className="space-y-4 mb-8">
-                  <li>500,000 API calls/month</li>
-                  <li>Real-time data</li>
-                  <li>5 years historical data</li>
-                  <li>Priority support</li>
+                  <li>100.000 chamadas por mês</li>
+                  <li>Dados End of Day</li>
+                  <li>25 indicadores</li>
+                  <li>10 anos de dados históricos</li>
                 </ul>
                 <Button className="w-full" asChild>
-                  <Link href="/contact">Get Started</Link>
+                  <Link href="/contact">Começar</Link>
                 </Button>
               </div>
               <div className="bg-card p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-bold mb-4">Enterprise</h3>
-                <p className="text-4xl font-bold mb-4">Custom</p>
-                <ul className="space-y-4 mb-8">
-                  <li>Unlimited API calls</li>
-                  <li>Real-time data</li>
-                  <li>Full historical data</li>
-                  <li>Dedicated support</li>
+                <h3 className="text-2xl font-bold mb-4">Customizado</h3>
+                <p className="text-4xl font-bold mb-4">Entre em contato</p>
+                <ul className="space-y-2 mb-7">
+                  <li>Chamadas ilimitadas</li>
+                  <li>Dados End of Day</li>
+                  <li>25 indicadores</li>
+                  <li>10 anos de dados históricos</li>
+                  <li>Suporte prioritário</li>
                 </ul>
                 <Button className="w-full" asChild>
                   <Link href="/contact">Contact Us</Link>
@@ -356,14 +494,14 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-40 px-6 bg-secondary">
+        <section className="py-40 px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
+            <h2 className="text-4xl font-bold mb-6">Pronto para começar?</h2>
             <p className="text-xl mb-8">
-              Join hundreds of developers and businesses using our API to power their applications
+              Junte-se a centenas de desenvolvedores e empresas que usam nossa API para criar soluções incríveis e alimentar seus aplicativos.
             </p>
             <Button size="lg" className="border-2 border-primary" variant="outline" asChild>
-              <Link href="/contact">Contact Us</Link>
+              <Link href="/contact">Entre em contato</Link>
             </Button>
           </div>
         </section>
