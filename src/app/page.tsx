@@ -28,6 +28,7 @@ const STOCKS = [
   { value: "PETR4", label: "Petrobrás (PETR4)" },
   { value: "KLBN11", label: "Klabin (KLBN11)" },
   { value: "VALE3", label: "Vale (VALE3)" },
+  { value: "WEGE3", label: "WEG (WEGE3)" },
 ]
 
 const TIME_RANGES = [
@@ -241,21 +242,23 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-center mb-12">Por que escolher nossa API?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center p-6">
-                <h3 className="text-2xl font-bold mb-4">Facilidade de uso</h3>
+                <h3 className="text-2xl font-bold mb-4">Sem surpresas</h3>
                 <p className="text-muted-foreground">
-                  Endpoints simples e intuitivos para acessar dados de ações brasileiras
+                  O que você vê é o que você vai receber. Não tem surpresas.
+                  E o que você paga é claro e transparente.
                 </p>
               </div>
               <div className="text-center p-6">
                 <h3 className="text-2xl font-bold mb-4">Dados históricos</h3>
                 <p className="text-muted-foreground">
                   10 anos de dados históricos.
+                  Tanto os preços quanto os +25 indicadores. Todos atualizados diariamente.
                 </p>
               </div>
               <div className="text-center p-6">
                 <h3 className="text-2xl font-bold mb-4">Integração simples</h3>
                 <p className="text-muted-foreground">
-                  API REST com documentação clara e exemplos.
+                  API REST com documentação clara e exemplos, e endpoints simples e intuitivos para acessar dados de ações brasileiras
                 </p>
               </div>
             </div>
@@ -304,7 +307,7 @@ export default function Home() {
                 </div>
               )}
 
-              <div className="h-[500px] w-full">
+              <div className="h-[250px] w-full">
                 {loading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -367,6 +370,12 @@ export default function Home() {
                               }
                               return res;
                             }}
+                            formatter={(value, name) => {
+                              if (name === "price") {
+                                return `R$${Number(value).toFixed(2)}`
+                              }
+                              return [value, name];
+                            }}
                           />
                         } 
                       />
@@ -379,20 +388,44 @@ export default function Home() {
                         dot={{
                           fill: getChartColor(),
                           stroke: "black",
-                          strokeWidth: chartData.length > 100 ? 0 : 1,
-                          r: chartData.length > 100 ? 0 : 3
+                          strokeWidth: 0,
+                          r: chartData.length > 100 ?
+                            (chartData.length > 240 ?
+                            (chartData.length > 480 ? 0 : 1) : 2) : 3
                         }}
                         activeDot={{
                           fill: getChartColor(),
                           stroke: "black",
-                          strokeWidth: 3,
-                          r: 6
+                          strokeWidth: 2,
+                          r: 5
                         }}
                       />
                     </AreaChart>
                   </ChartContainer>
                 )}
               </div>
+              
+              {chartData.length > 1 && (
+                <div className="mt-4 text-center">
+                  {(() => {
+                    const firstPrice = chartData[0].price;
+                    const lastPrice = chartData[chartData.length - 1].price;
+                    const percentChange = ((lastPrice - firstPrice) / firstPrice) * 100;
+                    const isPositive = percentChange >= 0;
+                    
+                    return (
+                      <div className="flex items-center justify-center gap-2">
+                        <span className={`font-bold ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                          {isPositive ? '+' : ''}{percentChange.toFixed(2)}%
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          (de {new Date(chartData[0].date).toLocaleDateString('pt-BR')} a {new Date(chartData[chartData.length - 1].date).toLocaleDateString('pt-BR')})
+                        </span>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
             </div>
             
             {/* Fundamentals Table */}
