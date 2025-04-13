@@ -186,7 +186,7 @@ export default function Home() {
         }
 
         const response = await fetch(
-          `https://api.brmarketdata.com/prices?ticker=${selectedStock}&start=${format(startDate, "yyyy-MM-dd")}&end=${format(endDate, "yyyy-MM-dd")}`,
+          `https://api.brmarketdata.com/prices/history?ticker=${selectedStock}&start=${format(startDate, "yyyy-MM-dd")}&end=${format(endDate, "yyyy-MM-dd")}`,
           {
             mode: 'cors',
             headers: {
