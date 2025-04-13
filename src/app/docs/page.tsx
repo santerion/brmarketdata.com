@@ -43,7 +43,7 @@ const docsSections = [
   },
 ];
 
-const pricesResponse = `{
+const pricesHistoryResponse = `{
   "ticker": "BBAS3",
   "prices": [
     {
@@ -55,6 +55,21 @@ const pricesResponse = `{
       "volume": 5782300
     }
     // Entradas adicionais de preços...
+  ]
+}`;
+
+const pricesByDateResponse = `{
+  "ticker": "BBAS3",
+  "prices": [
+    {
+      "date": "2024-06-30",
+      "open": 26.45,
+      "high": 26.89,
+      "low": 26.12,
+      "close": 26.62,
+      "volume": 5782300
+    }
+    // Entradas adicionais de tickers...
   ]
 }`;
 
@@ -138,7 +153,7 @@ export default function DocsPage() {
                     <CardContent>
                       <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
                       <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        GET /prices
+                        GET /prices/history
                       </div>
                       
                       <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
@@ -175,11 +190,67 @@ export default function DocsPage() {
                       
                       <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
                       <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        https://api.brmarketdata.com/prices?ticker=BBAS3&start=2010-01-01&end=2026-01-01
+                        https://api.brmarketdata.com/prices/history?ticker=BBAS3&start=2010-01-01&end=2026-01-01
                       </div>
                       
                       <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
-                      <CodeBlock code={pricesResponse} />
+                      <CodeBlock code={pricesHistoryResponse} />
+                    </CardContent>
+                  </Card>
+                </div>
+                
+              <div className="space-y-12">
+                <div id="prices-by-date">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Endpoint de Preços por Data</CardTitle>
+                      <p className="text-muted-foreground">Obtenha preços de todas as ações disponíveis em uma determinada data. Se não for informado uma data, será retornado o preço mais recente disponível.</p>
+                    </CardHeader>
+                    <CardContent>
+                      <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
+                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                        GET /prices/by-date
+                      </div>
+                      
+                      <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
+                      <Table className="mb-6">
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Parâmetro</TableHead>
+                            <TableHead>Tipo</TableHead>
+                            <TableHead>Obrigatório</TableHead>
+                            <TableHead>Descrição</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell className="font-mono">ticker</TableCell>
+                            <TableCell>string</TableCell>
+                            <TableCell>Sim</TableCell>
+                            <TableCell>Código da ação (ex: BBAS3)</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell className="font-mono">start</TableCell>
+                            <TableCell>string</TableCell>
+                            <TableCell>Sim</TableCell>
+                            <TableCell>Data inicial no formato AAAA-MM-DD</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell className="font-mono">end</TableCell>
+                            <TableCell>string</TableCell>
+                            <TableCell>Sim</TableCell>
+                            <TableCell>Data final no formato AAAA-MM-DD</TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                      
+                      <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
+                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                        https://api.brmarketdata.com/prices/by-date?date=2024-06-30
+                      </div>
+                      
+                      <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
+                      <CodeBlock code={pricesByDateResponse} />
                     </CardContent>
                   </Card>
                 </div>
