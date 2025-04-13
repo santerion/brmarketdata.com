@@ -21,8 +21,13 @@ const docsSections = [
     links: [
       {
         id: "prices-history",
-        title: "Preços Históricos",
+        title: "Histórico de Preços",
         href: "#prices-history",
+      },
+      {
+        id: "prices-by-date",
+        title: "Preços por Data",
+        href: "#prices-by-date",
       },
       {
         id: "fundamentals-history",
@@ -36,7 +41,7 @@ const docsSections = [
       },
       {
         id: "fundamentals-by-fundamental",
-        title: "Ações por Indicador",
+        title: "Indicadores por Indicador",
         href: "#fundamentals-by-fundamental",
       },
     ],
@@ -117,16 +122,16 @@ export default function DocsPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex-1 flex">
+      <div className="flex-1 flex flex-col lg:flex-row relative">
         <DocsSidebar sections={docsSections} />
-        <main className="flex-1 py-12 px-6">
+        <main className="flex-1 py-12 px-4 md:px-6 pt-20 lg:pt-12">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl font-bold mb-4">Documentação da API</h1>
-            <p className="text-xl text-muted-foreground mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Documentação da API</h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8">
               Referência completa para a API BR Market Data
             </p>
             
-            <div className="mb-12">
+            <div className="mb-12 space-y-8">
               <div id="getting-started">
                 <h2 className="text-3xl font-bold mb-6">Primeiros Passos</h2>
                 <Card className="mb-8">
@@ -143,252 +148,249 @@ export default function DocsPage() {
                 </Card>
               </div>
 
-              <div className="space-y-12">
-                <div id="prices-history">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Endpoint de Preços Históricos</CardTitle>
-                      <p className="text-muted-foreground">Obtenha dados históricos de preços para uma ação específica</p>
-                    </CardHeader>
-                    <CardContent>
-                      <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        GET /prices/history
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
-                      <Table className="mb-6">
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Parâmetro</TableHead>
-                            <TableHead>Tipo</TableHead>
-                            <TableHead>Obrigatório</TableHead>
-                            <TableHead>Descrição</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className="font-mono">ticker</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Código da ação (ex: BBAS3)</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-mono">start</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Data inicial no formato AAAA-MM-DD</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-mono">end</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Data final no formato AAAA-MM-DD</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        https://api.brmarketdata.com/prices/history?ticker=BBAS3&start=2010-01-01&end=2026-01-01
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
-                      <CodeBlock code={pricesHistoryResponse} />
-                    </CardContent>
-                  </Card>
-                </div>
-                
-              <div className="space-y-12">
-                <div id="prices-by-date">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Endpoint de Preços por Data</CardTitle>
-                      <p className="text-muted-foreground">Obtenha preços de todas as ações disponíveis em uma determinada data. Se não for informado uma data, será retornado o preço mais recente disponível.</p>
-                    </CardHeader>
-                    <CardContent>
-                      <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        GET /prices/by-date
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
-                      <Table className="mb-6">
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Parâmetro</TableHead>
-                            <TableHead>Tipo</TableHead>
-                            <TableHead>Obrigatório</TableHead>
-                            <TableHead>Descrição</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className="font-mono">ticker</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Código da ação (ex: BBAS3)</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-mono">start</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Data inicial no formato AAAA-MM-DD</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-mono">end</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Data final no formato AAAA-MM-DD</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        https://api.brmarketdata.com/prices/by-date?date=2024-06-30
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
-                      <CodeBlock code={pricesByDateResponse} />
-                    </CardContent>
-                  </Card>
-                </div>
-                
-                <div id="fundamentals-history">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Endpoint de Histórico de Indicadores</CardTitle>
-                      <p className="text-muted-foreground">Obtenha dados históricos para um indicador e ticker específicos</p>
-                    </CardHeader>
-                    <CardContent>
-                      <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        GET /fundamentals/history
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
-                      <Table className="mb-6">
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Parâmetro</TableHead>
-                            <TableHead>Tipo</TableHead>
-                            <TableHead>Obrigatório</TableHead>
-                            <TableHead>Descrição</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className="font-mono">ticker</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Código da ação (ex: BBAS3)</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="font-mono">fundamental</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Código do indicador financeiro (ex: p_l)</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        https://api.brmarketdata.com/fundamentals/history?ticker=BBAS3&fundamental=p_l
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
-                      <CodeBlock code={fundamentalHistoryResponse} />
-                    </CardContent>
-                  </Card>
-                </div>
-                
-                <div id="fundamentals-by-ticker">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Endpoint de Indicadores por Ticker</CardTitle>
-                      <p className="text-muted-foreground">Obtenha todos os indicadores disponíveis para um ticker específico</p>
-                    </CardHeader>
-                    <CardContent>
-                      <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        GET /fundamentals/by-ticker
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
-                      <Table className="mb-6">
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Parâmetro</TableHead>
-                            <TableHead>Tipo</TableHead>
-                            <TableHead>Obrigatório</TableHead>
-                            <TableHead>Descrição</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className="font-mono">ticker</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Código da ação (ex: BBAS3)</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        https://api.brmarketdata.com/fundamentals/by-ticker?ticker=BBAS3
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
-                      <CodeBlock code={byTickerResponse} />
-                    </CardContent>
-                  </Card>
-                </div>
-                
-                <div id="fundamentals-by-fundamental">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Endpoint de Ações por Indicador</CardTitle>
-                      <p className="text-muted-foreground">Obtenha o valor do indicador para todas as ações disponíveis</p>
-                    </CardHeader>
-                    <CardContent>
-                      <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        GET /fundamentals/by-fundamental
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
-                      <Table className="mb-6">
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Parâmetro</TableHead>
-                            <TableHead>Tipo</TableHead>
-                            <TableHead>Obrigatório</TableHead>
-                            <TableHead>Descrição</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className="font-mono">fundamental</TableCell>
-                            <TableCell>string</TableCell>
-                            <TableCell>Sim</TableCell>
-                            <TableCell>Código do indicador financeiro (ex: p_l)</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
-                      <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        https://api.brmarketdata.com/fundamentals/by-fundamental?fundamental=p_l
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
-                      <CodeBlock code={byFundamentalResponse} />
-                    </CardContent>
-                  </Card>
-                </div>
+              <div id="prices-history">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Endpoint de Preços Históricos</CardTitle>
+                    <p className="text-muted-foreground">Obtenha dados históricos de preços para uma ação específica</p>
+                  </CardHeader>
+                  <CardContent>
+                    <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      GET /prices/history
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
+                    <Table className="mb-6">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Parâmetro</TableHead>
+                          <TableHead>Tipo</TableHead>
+                          <TableHead>Obrigatório</TableHead>
+                          <TableHead>Descrição</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-mono">ticker</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Código da ação (ex: BBAS3)</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-mono">start</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Data inicial no formato AAAA-MM-DD</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-mono">end</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Data final no formato AAAA-MM-DD</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      https://api.brmarketdata.com/prices/history?ticker=BBAS3&start=2010-01-01&end=2026-01-01
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
+                    <CodeBlock code={pricesHistoryResponse} />
+                  </CardContent>
+                </Card>
+              </div>
+              
+              <div id="prices-by-date">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Endpoint de Preços por Data</CardTitle>
+                    <p className="text-muted-foreground">Obtenha preços de todas as ações disponíveis em uma determinada data. Se não for informado uma data, será retornado o preço mais recente disponível.</p>
+                  </CardHeader>
+                  <CardContent>
+                    <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      GET /prices/by-date
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
+                    <Table className="mb-6">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Parâmetro</TableHead>
+                          <TableHead>Tipo</TableHead>
+                          <TableHead>Obrigatório</TableHead>
+                          <TableHead>Descrição</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-mono">ticker</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Código da ação (ex: BBAS3)</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-mono">start</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Data inicial no formato AAAA-MM-DD</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-mono">end</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Data final no formato AAAA-MM-DD</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      https://api.brmarketdata.com/prices/by-date?date=2024-06-30
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
+                    <CodeBlock code={pricesByDateResponse} />
+                  </CardContent>
+                </Card>
+              </div>
+              
+              <div id="fundamentals-history">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Endpoint de Histórico de Indicadores</CardTitle>
+                    <p className="text-muted-foreground">Obtenha dados históricos para um indicador e ticker específicos</p>
+                  </CardHeader>
+                  <CardContent>
+                    <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      GET /fundamentals/history
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
+                    <Table className="mb-6">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Parâmetro</TableHead>
+                          <TableHead>Tipo</TableHead>
+                          <TableHead>Obrigatório</TableHead>
+                          <TableHead>Descrição</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-mono">ticker</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Código da ação (ex: BBAS3)</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-mono">fundamental</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Código do indicador financeiro (ex: p_l)</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      https://api.brmarketdata.com/fundamentals/history?ticker=BBAS3&fundamental=p_l
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
+                    <CodeBlock code={fundamentalHistoryResponse} />
+                  </CardContent>
+                </Card>
+              </div>
+              
+              <div id="fundamentals-by-ticker">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Endpoint de Indicadores por Ticker</CardTitle>
+                    <p className="text-muted-foreground">Obtenha todos os indicadores disponíveis para um ticker específico</p>
+                  </CardHeader>
+                  <CardContent>
+                    <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      GET /fundamentals/by-ticker
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
+                    <Table className="mb-6">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Parâmetro</TableHead>
+                          <TableHead>Tipo</TableHead>
+                          <TableHead>Obrigatório</TableHead>
+                          <TableHead>Descrição</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-mono">ticker</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Código da ação (ex: BBAS3)</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      https://api.brmarketdata.com/fundamentals/by-ticker?ticker=BBAS3
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
+                    <CodeBlock code={byTickerResponse} />
+                  </CardContent>
+                </Card>
+              </div>
+              
+              <div id="fundamentals-by-fundamental">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Endpoint de Ações por Indicador</CardTitle>
+                    <p className="text-muted-foreground">Obtenha o valor do indicador para todas as ações disponíveis</p>
+                  </CardHeader>
+                  <CardContent>
+                    <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      GET /fundamentals/by-fundamental
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
+                    <Table className="mb-6">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Parâmetro</TableHead>
+                          <TableHead>Tipo</TableHead>
+                          <TableHead>Obrigatório</TableHead>
+                          <TableHead>Descrição</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-mono">fundamental</TableCell>
+                          <TableCell>string</TableCell>
+                          <TableCell>Sim</TableCell>
+                          <TableCell>Código do indicador financeiro (ex: p_l)</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
+                    <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
+                      https://api.brmarketdata.com/fundamentals/by-fundamental?fundamental=p_l
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
+                    <CodeBlock code={byFundamentalResponse} />
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
