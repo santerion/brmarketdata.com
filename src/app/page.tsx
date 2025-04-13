@@ -231,7 +231,7 @@ export default function Home() {
               Acesse preços e indicadores históricos de ações brasileiras com nossa API
             </p>
             <Button size="lg" asChild>
-              <Link href="#pricing">Começar</Link>
+              <Link href="#preco">Começar</Link>
             </Button>
           </div>
         </section>
@@ -478,7 +478,7 @@ export default function Home() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="py-20 px-6 bg-muted">
+        <section id="preco" className="py-20 px-6 bg-muted">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-12">Precificação simples</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -492,7 +492,7 @@ export default function Home() {
                   <li>10 anos de dados históricos</li>
                 </ul>
                 <Button className="w-full" asChild>
-                  <Link href="/contact">Começar</Link>
+                  <Link href="/contato">Começar</Link>
                 </Button>
               </div>
               <div className="bg-card p-8 rounded-lg shadow-lg border-2 border-primary">
@@ -505,7 +505,7 @@ export default function Home() {
                   <li>10 anos de dados históricos</li>
                 </ul>
                 <Button className="w-full" asChild>
-                  <Link href="/contact">Começar</Link>
+                  <Link href="/contato">Começar</Link>
                 </Button>
               </div>
               <div className="bg-card p-8 rounded-lg shadow-lg">
@@ -519,7 +519,7 @@ export default function Home() {
                   <li>Suporte prioritário</li>
                 </ul>
                 <Button className="w-full" asChild>
-                  <Link href="/contact">Contact Us</Link>
+                  <Link href="/contato">Entre em contato</Link>
                 </Button>
               </div>
             </div>
@@ -534,7 +534,7 @@ export default function Home() {
               Junte-se a centenas de desenvolvedores e empresas que usam nossa API para criar soluções incríveis e alimentar seus aplicativos.
             </p>
             <Button size="lg" className="border-2 border-primary" variant="outline" asChild>
-              <Link href="/contact">Entre em contato</Link>
+              <Link href="/contato">Entre em contato</Link>
             </Button>
           </div>
         </section>

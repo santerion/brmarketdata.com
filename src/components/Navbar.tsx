@@ -32,9 +32,9 @@ export function Navbar() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link href="/pricing" legacyBehavior passHref>
+                <Link href="/#preco" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <span className="text-md font-semibold">Pricing</span>
+                    <span className="text-md font-semibold">Preço</span>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
@@ -43,6 +43,14 @@ export function Navbar() {
                 <Link href="/docs" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     <span className="text-md font-semibold">Docs</span>
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/contato" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <span className="text-md font-semibold">Contato</span>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
