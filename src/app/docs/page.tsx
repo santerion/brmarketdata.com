@@ -20,24 +20,24 @@ const docsSections = [
     title: "API Endpoints",
     links: [
       {
-        id: "prices",
+        id: "prices-history",
         title: "Preços Históricos",
-        href: "#prices",
+        href: "#prices-history",
       },
       {
-        id: "indicators-history",
+        id: "fundamentals-history",
         title: "Histórico de Indicadores",
-        href: "#indicators-history",
+        href: "#fundamentals-history",
       },
       {
-        id: "by-ticker",
+        id: "fundamentals-by-ticker",
         title: "Indicadores por Ticker",
-        href: "#by-ticker",
+        href: "#fundamentals-by-ticker",
       },
       {
-        id: "by-indicator",
+        id: "fundamentals-by-fundamental",
         title: "Ações por Indicador",
-        href: "#by-indicator",
+        href: "#fundamentals-by-fundamental",
       },
     ],
   },
@@ -58,9 +58,9 @@ const pricesResponse = `{
   ]
 }`;
 
-const indicatorHistoryResponse = `{
+const fundamentalHistoryResponse = `{
   "ticker": "BBAS3",
-  "indicator": "p_l",
+  "fundamental": "p_l",
   "history": [
     {
       "date": "2020-01-01",
@@ -76,7 +76,7 @@ const indicatorHistoryResponse = `{
 
 const byTickerResponse = `{
   "ticker": "BBAS3",
-  "indicators": {
+  "fundamentals": {
     "p_l": 8.92,
     "p_vp": 0.87,
     "dy": 5.23,
@@ -86,8 +86,8 @@ const byTickerResponse = `{
   "last_updated": "2023-09-15"
 }`;
 
-const byIndicatorResponse = `{
-  "indicator": "p_l",
+const byFundamentalResponse = `{
+  "fundamental": "p_l",
   "stocks": {
     "BBAS3": 8.92,
     "ITUB4": 9.45,
@@ -129,7 +129,7 @@ export default function DocsPage() {
               </div>
 
               <div className="space-y-12">
-                <div id="prices">
+                <div id="prices-history">
                   <Card>
                     <CardHeader>
                       <CardTitle>Endpoint de Preços Históricos</CardTitle>
@@ -184,7 +184,7 @@ export default function DocsPage() {
                   </Card>
                 </div>
                 
-                <div id="indicators-history">
+                <div id="fundamentals-history">
                   <Card>
                     <CardHeader>
                       <CardTitle>Endpoint de Histórico de Indicadores</CardTitle>
@@ -193,7 +193,7 @@ export default function DocsPage() {
                     <CardContent>
                       <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
                       <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        GET /indicators/history
+                        GET /fundamentals/history
                       </div>
                       
                       <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
@@ -214,7 +214,7 @@ export default function DocsPage() {
                             <TableCell>Código da ação (ex: BBAS3)</TableCell>
                           </TableRow>
                           <TableRow>
-                            <TableCell className="font-mono">indicator</TableCell>
+                            <TableCell className="font-mono">fundamental</TableCell>
                             <TableCell>string</TableCell>
                             <TableCell>Sim</TableCell>
                             <TableCell>Código do indicador financeiro (ex: p_l)</TableCell>
@@ -224,16 +224,16 @@ export default function DocsPage() {
                       
                       <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
                       <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        https://api.brmarketdata.com/indicators/history?ticker=BBAS3&indicator=p_l
+                        https://api.brmarketdata.com/fundamentals/history?ticker=BBAS3&fundamental=p_l
                       </div>
                       
                       <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
-                      <CodeBlock code={indicatorHistoryResponse} />
+                      <CodeBlock code={fundamentalHistoryResponse} />
                     </CardContent>
                   </Card>
                 </div>
                 
-                <div id="by-ticker">
+                <div id="fundamentals-by-ticker">
                   <Card>
                     <CardHeader>
                       <CardTitle>Endpoint de Indicadores por Ticker</CardTitle>
@@ -242,7 +242,7 @@ export default function DocsPage() {
                     <CardContent>
                       <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
                       <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        GET /indicators/by-ticker
+                        GET /fundamentals/by-ticker
                       </div>
                       
                       <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
@@ -267,7 +267,7 @@ export default function DocsPage() {
                       
                       <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
                       <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        https://api.brmarketdata.com/indicators/by-ticker?ticker=BBAS3
+                        https://api.brmarketdata.com/fundamentals/by-ticker?ticker=BBAS3
                       </div>
                       
                       <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
@@ -276,7 +276,7 @@ export default function DocsPage() {
                   </Card>
                 </div>
                 
-                <div id="by-indicator">
+                <div id="fundamentals-by-fundamental">
                   <Card>
                     <CardHeader>
                       <CardTitle>Endpoint de Ações por Indicador</CardTitle>
@@ -285,7 +285,7 @@ export default function DocsPage() {
                     <CardContent>
                       <h3 className="text-xl font-semibold mb-3">Endpoint</h3>
                       <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        GET /indicators/by-indicator
+                        GET /fundamentals/by-fundamental
                       </div>
                       
                       <h3 className="text-xl font-semibold mb-3">Parâmetros</h3>
@@ -300,7 +300,7 @@ export default function DocsPage() {
                         </TableHeader>
                         <TableBody>
                           <TableRow>
-                            <TableCell className="font-mono">indicator</TableCell>
+                            <TableCell className="font-mono">fundamental</TableCell>
                             <TableCell>string</TableCell>
                             <TableCell>Sim</TableCell>
                             <TableCell>Código do indicador financeiro (ex: p_l)</TableCell>
@@ -310,11 +310,11 @@ export default function DocsPage() {
                       
                       <h3 className="text-xl font-semibold mb-3">Exemplo de Requisição</h3>
                       <div className="bg-muted p-3 rounded-md font-mono text-sm mb-6">
-                        https://api.brmarketdata.com/indicators/by-indicator?indicator=p_l
+                        https://api.brmarketdata.com/fundamentals/by-fundamental?fundamental=p_l
                       </div>
                       
                       <h3 className="text-xl font-semibold mb-3">Exemplo de Resposta</h3>
-                      <CodeBlock code={byIndicatorResponse} />
+                      <CodeBlock code={byFundamentalResponse} />
                     </CardContent>
                   </Card>
                 </div>

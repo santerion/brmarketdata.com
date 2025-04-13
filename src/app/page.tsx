@@ -16,7 +16,7 @@ interface ChartDataPoint {
   price: number
 }
 
-interface Indicator {
+interface Fundamental {
   ticker: string
   date: string
   key: string
@@ -47,8 +47,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-// List of indicators to display
-const INDICATORS_TO_SHOW = [
+// List of fundamentals to display
+const FUNDAMENTALS_TO_SHOW = [
   "current_liquidity",
   "dividend_yield_last_12_months",
   "ebitda_margin",
@@ -79,11 +79,11 @@ export default function Home() {
   const [selectedStock, setSelectedStock] = useState(STOCKS[0].value)
   const [selectedTimeRange, setSelectedTimeRange] = useState(TIME_RANGES[0].value)
   const [chartData, setChartData] = useState<ChartDataPoint[]>([])
-  const [indicators, setIndicators] = useState<Indicator[]>([])
+  const [fundamentals, setFundamentals] = useState<Fundamental[]>([])
   const [loading, setLoading] = useState(false)
-  const [indicatorsLoading, setIndicatorsLoading] = useState(false)
+  const [fundamentalsLoading, setFundamentalsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [indicatorsError, setIndicatorsError] = useState<string | null>(null)
+  const [fundamentalsError, setFundamentalsError] = useState<string | null>(null)
 
   // Calculate Y-axis domain
   const getYAxisDomain = () => {
@@ -113,15 +113,15 @@ export default function Home() {
     }
   } satisfies ChartConfig
 
-  // Fetch indicators data when stock changes
+  // Fetch fundamentals data when stock changes
   useEffect(() => {
-    const fetchIndicators = async () => {
-      setIndicatorsLoading(true)
-      setIndicatorsError(null)
+    const fetchFundamentals = async () => {
+      setFundamentalsLoading(true)
+      setFundamentalsError(null)
       
       try {
         const response = await fetch(
-          `https://api.brmarketdata.com/indicators/by-ticker?ticker=${selectedStock}`,
+          `https://api.brmarketdata.com/fundamentals/by-ticker?ticker=${selectedStock}`,
           {
             mode: 'cors',
             headers: {
@@ -136,21 +136,21 @@ export default function Home() {
         
         const data = await response.json()
         
-        // Filter data to only show the indicators we want
-        const filteredData = data.filter((item: Indicator) => 
-          INDICATORS_TO_SHOW.includes(item.key)
+        // Filter data to only show the fundamentals we want
+        const filteredData = data.filter((item: Fundamental) => 
+          FUNDAMENTALS_TO_SHOW.includes(item.key)
         )
         
-        setIndicators(filteredData)
+        setFundamentals(filteredData)
       } catch (error) {
-        console.error("Error fetching indicators:", error)
-        setIndicatorsError(error instanceof Error ? error.message : "Failed to fetch indicators")
+        console.error("Error fetching fundamentals:", error)
+        setFundamentalsError(error instanceof Error ? error.message : "Failed to fetch fundamentals")
       } finally {
-        setIndicatorsLoading(false)
+        setFundamentalsLoading(false)
       }
     }
 
-    fetchIndicators()
+    fetchFundamentals()
   }, [selectedStock])
 
   useEffect(() => {
@@ -432,13 +432,13 @@ export default function Home() {
             <div className="mt-8 bg-card py-6 px-4 rounded-lg shadow-lg">
               <h3 className="text-xl font-bold mb-4">Stock Fundamentals <span className="text-primary">{selectedStock}</span></h3>
               
-              {indicatorsError && (
+              {fundamentalsError && (
                 <div className="mb-8 p-4 bg-destructive/10 text-destructive rounded-lg text-center">
-                  {indicatorsError}
+                  {fundamentalsError}
                 </div>
               )}
               
-              {indicatorsLoading ? (
+              {fundamentalsLoading ? (
                 <div className="flex items-center justify-center h-32">
                   <div className="flex flex-col items-center">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-2"></div>
@@ -448,18 +448,18 @@ export default function Home() {
               ) : (
                 <>
                   
-                  {indicators.length > 0 ? (
+                  {fundamentals.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                      {indicators.map((indicator) => {
+                      {fundamentals.map((fundamental) => {
                         
                         return (
-                          <div key={indicator.key} className="bg-card border border-border p-2 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                            <div className="font-medium text-xs mb-1 truncate" title={indicator.name}>{indicator.name}</div>
+                          <div key={fundamental.key} className="bg-card border border-border p-2 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                            <div className="font-medium text-xs mb-1 truncate" title={fundamental.name}>{fundamental.name}</div>
                             <div className={`text-right font-bold text-md`}>
-                              {indicator.value !== null 
-                                ? indicator.key.includes('margin') || indicator.key.includes('dividend') || indicator.key.includes('growth') || indicator.key.includes('payout') || indicator.key.includes('roic') || indicator.key.includes('roa') || indicator.key.includes('roe')
-                                  ? `${indicator.value.toFixed(2)}%`
-                                  : indicator.value.toFixed(2)
+                              {fundamental.value !== null 
+                                ? fundamental.key.includes('margin') || fundamental.key.includes('dividend') || fundamental.key.includes('growth') || fundamental.key.includes('payout') || fundamental.key.includes('roic') || fundamental.key.includes('roa') || fundamental.key.includes('roe')
+                                  ? `${fundamental.value.toFixed(2)}%`
+                                  : fundamental.value.toFixed(2)
                                 : '-'}
                             </div>
                           </div>
