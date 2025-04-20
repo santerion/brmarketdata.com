@@ -430,7 +430,7 @@ export default function Home() {
             
             {/* Fundamentals Table */}
             <div className="mt-8 bg-card py-6 px-4 rounded-lg shadow-lg">
-              <h3 className="text-xl font-bold mb-4">Stock Fundamentals <span className="text-primary">{selectedStock}</span></h3>
+              <h3 className="text-xl font-bold mb-4">Indicadores <span className="text-primary">{selectedStock}</span></h3>
               
               {fundamentalsError && (
                 <div className="mb-8 p-4 bg-destructive/10 text-destructive rounded-lg text-center">
