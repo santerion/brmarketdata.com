@@ -43,7 +43,7 @@ export default function Simulator() {
   const [selectedStock, setSelectedStock] = useState(STOCKS[0].value)
   const [initialContribution, setInitialContribution] = useState("1000")
   const [monthlyContribution, setMonthlyContribution] = useState("1000")
-  const [startDate, setStartDate] = useState("2015-01")
+  const [startDate, setStartDate] = useState("2017-01")
   const [endDate, setEndDate] = useState(format(new Date(), "yyyy-MM"))
   const [chartData, setChartData] = useState<ChartDataPoint[]>([])
   const [loading, setLoading] = useState(false)
@@ -57,12 +57,11 @@ export default function Simulator() {
       setError(null)
       
       try {
-        const start = parse(startDate, "yyyy-MM", new Date())
-        const end = parse(endDate, "yyyy-MM", new Date())
+        const [startYear, startMonth] = startDate.split('-')
+        const [endYear, endMonth] = endDate.split('-')
         
-        // Add one month to end date to include the current month
-        // This allows us to calculate the, for example, April contribution using the April 1st price.
-        end.setMonth(end.getMonth() + 1)
+        const start = startOfMonth(new Date(parseInt(startYear), parseInt(startMonth) - 1, 1, 12, 0, 0))
+        const end = endOfMonth(new Date(parseInt(endYear), parseInt(endMonth) - 1, 1, 12, 0, 0))
         
         const response = await fetch(
           `https://api.brmarketdata.com/prices/history?ticker=${selectedStock}&start=${format(start, "yyyy-MM-dd")}&end=${format(end, "yyyy-MM-dd")}`,
@@ -80,20 +79,23 @@ export default function Simulator() {
         
         const data = await response.json()
         
-        // Process the data to calculate portfolio value over time
-        const processedData: ChartDataPoint[] = []
-        let shares = 0
-        let totalInvested = 0
-        let totalCost = 0
-        let remainingMoney = 0 // Track money that couldn't be invested in whole shares
-        
+        // Ensure correct start and end dates for filtering
+        const startLimit = startOfMonth(new Date(parseInt(startYear), parseInt(startMonth) - 1, 1, 0, 0, 0)) // Use start of day
+        const endLimit = endOfMonth(new Date(parseInt(endYear), parseInt(endMonth) - 1, 1, 23, 59, 59)) // Use end of day
+
         // Sort data by date
         const sortedData = data.sort((a: any, b: any) => 
           new Date(a.date).getTime() - new Date(b.date).getTime()
         )
+
+        // Filter data to be within the selected date range *before* selecting monthly points
+        const filteredData = sortedData.filter((item: any) => {
+          const itemDate = new Date(item.date)
+          return itemDate >= startLimit && itemDate <= endLimit
+        })
         
-        // Get first day of each month
-        const monthlyData = sortedData.filter((item: any, index: number, array: any[]) => {
+        // Get first day of each month from the filtered data
+        const monthlyData = filteredData.filter((item: any, index: number, array: any[]) => {
           if (index === 0) return true
           const currentDate = new Date(item.date)
           const prevDate = new Date(array[index - 1].date)
@@ -101,6 +103,12 @@ export default function Simulator() {
         })
         
         // Calculate portfolio value over time
+        const processedData: ChartDataPoint[] = []
+        let shares = 0
+        let totalInvested = 0
+        let totalCost = 0
+        let remainingMoney = 0 // Track money that couldn't be invested in whole shares
+        
         monthlyData.forEach((item: any, index: number) => {
           const date = new Date(item.date)
           const price = item.price

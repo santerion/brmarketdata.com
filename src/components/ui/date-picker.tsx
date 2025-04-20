@@ -17,7 +17,11 @@ interface DatePickerProps {
 }
 
 export function DatePicker({ value, onChange }: DatePickerProps) {
-  const [date, setDate] = React.useState<Date | undefined>(value ? new Date(value) : undefined)
+  const [date, setDate] = React.useState<Date | undefined>(() => {
+    if (!value) return undefined
+    const [year, month] = value.split('-')
+    return new Date(parseInt(year), parseInt(month) - 1, 1, 12, 0, 0)
+  })
 
   // Generate years from 2010 to current year + 1
   const years = Array.from(
@@ -27,18 +31,18 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
 
   // Months in Portuguese
   const months = [
-    { value: "01", label: "Janeiro" },
-    { value: "02", label: "Fevereiro" },
-    { value: "03", label: "Março" },
-    { value: "04", label: "Abril" },
-    { value: "05", label: "Maio" },
-    { value: "06", label: "Junho" },
-    { value: "07", label: "Julho" },
-    { value: "08", label: "Agosto" },
-    { value: "09", label: "Setembro" },
-    { value: "10", label: "Outubro" },
-    { value: "11", label: "Novembro" },
-    { value: "12", label: "Dezembro" },
+    { value: "01", label: "Jan" },
+    { value: "02", label: "Fev" },
+    { value: "03", label: "Mar" },
+    { value: "04", label: "Abr" },
+    { value: "05", label: "Mai" },
+    { value: "06", label: "Jun" },
+    { value: "07", label: "Jul" },
+    { value: "08", label: "Ago" },
+    { value: "09", label: "Set" },
+    { value: "10", label: "Out" },
+    { value: "11", label: "Nov" },
+    { value: "12", label: "Dez" },
   ]
 
   const currentMonth = date ? format(date, "MM") : format(new Date(), "MM")
