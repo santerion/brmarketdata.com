@@ -35,15 +35,15 @@ const chartConfig = {
   },
   contributions: {
     label: "Contribuições",
-    color: "hsl(var(--red))",
+    color: "hsl(var(--blue))",
   },
 } satisfies ChartConfig
 
 export default function Simulator() {
   const [selectedStock, setSelectedStock] = useState(STOCKS[0].value)
-  const [initialContribution, setInitialContribution] = useState("10000")
+  const [initialContribution, setInitialContribution] = useState("1000")
   const [monthlyContribution, setMonthlyContribution] = useState("1000")
-  const [startDate, setStartDate] = useState("2020-01")
+  const [startDate, setStartDate] = useState("2015-01")
   const [endDate, setEndDate] = useState(format(new Date(), "yyyy-MM"))
   const [chartData, setChartData] = useState<ChartDataPoint[]>([])
   const [loading, setLoading] = useState(false)
@@ -247,8 +247,8 @@ export default function Simulator() {
                         <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity={0}/>
                       </linearGradient>
                       <linearGradient id="colorContributions" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--red))" stopOpacity={0.8}/>
-                        <stop offset="100%" stopColor="hsl(var(--red))" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="hsl(var(--blue))" stopOpacity={0.8}/>
+                        <stop offset="100%" stopColor="hsl(var(--blue))" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid 
@@ -287,7 +287,7 @@ export default function Simulator() {
                     <Area
                       type="monotone"
                       dataKey="contributions"
-                      stroke="hsl(var(--red))"
+                      stroke="hsl(var(--blue))"
                       fillOpacity={1}
                       fill="url(#colorContributions)"
                     />
