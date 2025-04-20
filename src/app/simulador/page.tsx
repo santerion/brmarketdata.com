@@ -178,7 +178,7 @@ export default function Simulator() {
       <main className="flex-1">
         <section className="py-20 px-6">
           <div className="max-w-5xl mx-auto">
-            <h1 className="text-4xl font-bold text-center mb-8">Simulador de Investimentos</h1>
+            <h1 className="text-4xl font-bold text-center mb-8">Simulador de Aportes</h1>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <div className="space-y-4">
@@ -251,7 +251,7 @@ export default function Simulator() {
                 </div>
               ) : (
                 <ChartContainer config={chartConfig} className="h-full w-full px-2 mx-auto">
-                  <AreaChart data={chartData} margin={{ left: 5, right: 10, top: 10, bottom: 5 }}>
+                  <AreaChart data={chartData} margin={{ left: 30, right: 10, top: 10, bottom: 5 }}>
                     <defs>
                       <linearGradient id="colorPortfolio" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="hsl(var(--green))" stopOpacity={0.8}/>
@@ -273,7 +273,7 @@ export default function Simulator() {
                       tickFormatter={(date) => format(date, "MMM/yy", { locale: ptBR })}
                     />
                     <YAxis 
-                      tickFormatter={(value) => `R$${value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                      tickFormatter={(value) => `R$${value.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`}
                     />
                     <ChartTooltip 
                       content={
@@ -283,7 +283,7 @@ export default function Simulator() {
                             return format(payload[0].payload.date, "MMM/yy", { locale: ptBR });
                           }}
                           formatter={(value, name) => {
-                            return [`R$${Number(value).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, name === "portfolioValue" ? "Valor do Portfólio" : "Contribuições"];
+                            return [`R$${Number(value).toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`, name === "portfolioValue" ? " Valor do Portfólio" : " Desembolso"];
                           }}
                         />
                       } 
@@ -334,7 +334,7 @@ export default function Simulator() {
                   </p>
                 </div>
                 <div className="bg-card p-4 rounded-lg">
-                  <h3 className="text-lg font-semibold mb-2">Preço {format(chartData[chartData.length - 1].date, 'MMM/yy')}</h3>
+                  <h3 className="text-lg font-semibold mb-2">Preço {format(chartData[chartData.length - 1].date, 'MM/yy')}</h3>
                   <p className="text-2xl font-bold">
                     R${chartData[chartData.length - 1].price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </p>

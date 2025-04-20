@@ -33,11 +33,11 @@ const STOCKS = [
 
 const chartConfig = {
   portfolioValue: {
-    label: "Valor do Portfólio",
+    label: " Valor do Portfólio",
     color: "hsl(var(--green))",
   },
   contributions: {
-    label: "Total Contribuído",
+    label: " Desembolso",
     color: "hsl(var(--blue))",
   },
 } satisfies ChartConfig
@@ -270,7 +270,7 @@ export default function Simulator() {
       <main className="flex-1">
         <section className="py-20 px-6">
           <div className="max-w-5xl mx-auto">
-            <h1 className="text-4xl font-bold text-center mb-8">Simulador de Investimentos</h1>
+            <h1 className="text-4xl font-bold text-center mb-8">Simulador de Aportes (multiacões)</h1>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               <div className="space-y-4">
@@ -405,7 +405,7 @@ export default function Simulator() {
                 </div>
               ) : (
                 <ChartContainer config={chartConfig} className="h-full w-full px-2 mx-auto">
-                  <AreaChart data={chartData} margin={{ left: 5, right: 10, top: 10, bottom: 5 }}>
+                  <AreaChart data={chartData} margin={{ left: 30, right: 10, top: 10, bottom: 5 }}>
                     <defs>
                       <linearGradient id="colorPortfolio" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="hsl(var(--green))" stopOpacity={0.8}/>
@@ -436,7 +436,7 @@ export default function Simulator() {
                         <ChartTooltipContent
                           indicator="dot"
                           labelFormatter={(_, payload) => payload?.[0]?.payload?.date instanceof Date ? format(payload[0].payload.date, "dd MMM yyyy", { locale: ptBR }) : ""}
-                          formatter={(value, name) => [`R$${Number(value).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, chartConfig[name as keyof typeof chartConfig]?.label || name]}
+                          formatter={(value, name) => [`R$${Number(value).toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`, chartConfig[name as keyof typeof chartConfig]?.label || name]}
                         />
                       }
                     />
