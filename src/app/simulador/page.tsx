@@ -26,6 +26,9 @@ const STOCKS = [
   { value: "KLBN11", label: "Klabin (KLBN11)" },
   { value: "VALE3", label: "Vale (VALE3)" },
   { value: "WEGE3", label: "WEG (WEGE3)" },
+  { value: "B3SA3", label: "B3 (B3SA3)" },
+  { value: "BBAS3", label: "BB (BBAS3)" },
+  { value: "ITSA4", label: "Itaúsa (ITSA4)" },
 ]
 
 const chartConfig = {
