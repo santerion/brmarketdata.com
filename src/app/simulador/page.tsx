@@ -22,13 +22,22 @@ interface ChartDataPoint {
 }
 
 const STOCKS = [
-  { value: "PETR4", label: "Petrobrás (PETR4)" },
-  { value: "KLBN11", label: "Klabin (KLBN11)" },
-  { value: "VALE3", label: "Vale (VALE3)" },
-  { value: "WEGE3", label: "WEG (WEGE3)" },
-  { value: "B3SA3", label: "B3 (B3SA3)" },
-  { value: "BBAS3", label: "BB (BBAS3)" },
-  { value: "ITSA4", label: "Itaúsa (ITSA4)" },
+    { value : "BBAS3", label : "Banco do Brasil (BBAS3)" },
+    { value : "PETR4", label : "Petrobrás (PETR4)" },
+    { value : "BBSE3", label : "BB Seguridade (BBSE3)" },
+    { value : "ITSA4", label : "Itausa (ITSA4)" },
+    { value : "VALE3", label : "Vale (VALE3)" },
+    { value : "TAEE11", label : "Taesa (TAEE11)" },
+    { value : "CMIG4", label : "Cemig (CMIG4)" },
+    { value : "ISAE4", label : "Isa Energia Brasil (ISAE4)" },
+    { value : "CXSE3", label : "Caixa Seguridade (CXSE3)" },
+    { value : "CSMG3", label : "Copasa (CSMG3)" },
+    { value : "GOAU4", label : "Gerdau Metalúrgica (GOAU4)" },
+    { value : "WEGE3", label : "WEG (WEGE3)" },
+    { value : "AURE3", label : "Auren Energia (AURE3)" },
+    { value : "KLBN11", label : "Klabin (KLBN11)" },
+    { value : "ITUB4", label : "Banco Itau Unibanco (ITUB4)" },
+    { value : "EGIE3", label : "Engie Brasil (EGIE3)" },
 ]
 
 const chartConfig = {
