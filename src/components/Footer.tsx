@@ -16,6 +16,8 @@ export function Footer() {
                 <li><Link href="/docs" className="hover:text-foreground">Docs</Link></li>
                 <li><Link href="/preco" className="hover:text-foreground">Preços</Link></li>
                 <li><Link href="/contato" className="hover:text-foreground">Contato</Link></li>
+                <li><Link href="/simulador" className="hover:text-foreground">Simulador de Aportes</Link></li>
+                <li><Link href="/simulador-multiacoes" className="hover:text-foreground">Simulador de Aportes (multiações)</Link></li>
             </ul>
             </div>
             <div>
